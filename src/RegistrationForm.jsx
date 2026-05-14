@@ -201,7 +201,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
               <p style={{ margin: 0, color: "#64748b", fontSize: "13px" }}>Billing Statement · Registrar's Office</p>
             </div>
             <div style={{ display: "flex", alignItems: "flex-end", gap: "10px" }}>
-              <button onClick={onPdfView} style={{
+              <button onClick={() => onPdfView(form)} style={{
                 background: "transparent", border: "1px solid #3b82f6", color: "#3b82f6",
                 borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600",
                 cursor: "pointer", fontFamily: "'DM Sans', sans-serif",

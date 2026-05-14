@@ -118,7 +118,6 @@ const BillingStatement = ({ copy, reg: regProp, courses: coursesProp }) => {
       border: "1px solid #000",
       padding: "10px 14px",
       marginBottom: "0",
-      pageBreakAfter: "always",
       backgroundColor: "#fff",
       width: "680px",
       boxSizing: "border-box",
@@ -254,7 +253,43 @@ const BillingStatement = ({ copy, reg: regProp, courses: coursesProp }) => {
   );
 };
 
-export default function RegistrationBill({ registrationId, onBack }) {
+const mapFormToReg = (form) => ({
+  student_id: form.studentId,
+  student_name: form.studentName,
+  major: form.major,
+  advisor: form.advisor,
+  semester: form.semester,
+  year: form.year,
+  level: form.level,
+  transaction_no: form.transactionNo,
+  bill_no: form.billNo,
+  registration_date: form.registrationDate,
+  print_date: form.printDate,
+  female_discount: parseFloat(form.femaleDiscount) || 0,
+  child_of_alumni: parseFloat(form.childOfAlumni) || 0,
+  discount_amount: parseFloat(form.discountAmount) || 0,
+  semester_fee: parseFloat(form.semesterFee) || 0,
+  graduation_fee: parseFloat(form.graduationFee) || 0,
+  peregrine_fee: parseFloat(form.peregrineFee) || 0,
+  late_reg_fee: parseFloat(form.lateRegFee) || 0,
+  cash_back: parseFloat(form.cashBack) || 0,
+  forfeited_amount: parseFloat(form.forfeitedAmount) || 0,
+  due_by: form.dueBy,
+  processed_by: form.processedBy,
+});
+
+const mapFormToCourses = (formCourses) =>
+  formCourses.map(c => ({
+    course_id: c.courseId,
+    section: c.section,
+    course_name: c.courseName,
+    credit_hour: parseFloat(c.creditHour) || 0,
+    class_time: c.classTime,
+    days: c.days,
+    room: c.room,
+  }));
+
+export default function RegistrationBill({ registrationId, onBack, formData }) {
   const [registration, setRegistration] = useState(null);
   const [loading, setLoading] = useState(!!registrationId);
   const [error, setError] = useState(null);
@@ -298,7 +333,12 @@ export default function RegistrationBill({ registrationId, onBack }) {
           padding: "8px 18px", borderRadius: "6px", cursor: "pointer",
           fontSize: "13px", fontWeight: "600", fontFamily: "'DM Sans', sans-serif",
         }}>← Back to Form</button>
-        <button onClick={() => window.print()} style={{
+        <button onClick={() => {
+          const orig = document.title;
+          document.title = 'IUB Registration Bill';
+          window.print();
+          setTimeout(() => { document.title = orig; }, 100);
+        }} style={{
           background: "#334155", border: "none", color: "#fff",
           padding: "8px 18px", borderRadius: "6px", cursor: "pointer",
           fontSize: "13px", fontWeight: "600", fontFamily: "'DM Sans', sans-serif",
@@ -306,11 +346,25 @@ export default function RegistrationBill({ registrationId, onBack }) {
       </div>
       {loading && <div style={{ color: "#333", fontSize: "14px" }}>Loading registration data...</div>}
       {error && <div style={{ color: "#c00", fontSize: "14px" }}>Error: {error}</div>}
-      {!loading && !error && (
+      {!loading && !error && registrationId && (
         <>
           <BillingStatement copy="Student Copy" reg={registration} courses={registration?.courses} />
           <BillingStatement copy="Bank Copy" reg={registration} courses={registration?.courses} />
         </>
+      )}
+      {!loading && !error && !registrationId && formData && (
+        <>
+          <BillingStatement copy="Student Copy" reg={mapFormToReg(formData)} courses={mapFormToCourses(formData.courses)} />
+          <BillingStatement copy="Bank Copy" reg={mapFormToReg(formData)} courses={mapFormToCourses(formData.courses)} />
+        </>
+      )}
+      {!loading && !error && !registrationId && !formData && (
+        <div style={{
+          color: "#333", fontSize: "16px", marginTop: "60px",
+          textAlign: "center", fontFamily: "'DM Sans', sans-serif",
+        }}>
+          No data to display. Please fill out the form first and click PDF View.
+        </div>
       )}
     </div>
   );

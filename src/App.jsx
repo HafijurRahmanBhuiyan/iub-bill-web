@@ -5,17 +5,19 @@ import RegistrationBill from './RegistrationBill.jsx'
 function App() {
   const [page, setPage] = useState('form')
   const [registrationId, setRegistrationId] = useState(null)
+  const [formData, setFormData] = useState(null)
 
   if (page === 'bill') return (
     <RegistrationBill
       registrationId={registrationId}
-      onBack={() => { setPage('form'); setRegistrationId(null) }}
+      formData={formData}
+      onBack={() => { setPage('form'); setRegistrationId(null); setFormData(null) }}
     />
   )
 
   return (
     <RegistrationForm
-      onPdfView={() => setPage('bill')}
+      onPdfView={(data) => { setFormData(data); setPage('bill') }}
       onSubmitted={(id) => { setRegistrationId(id); setPage('bill') }}
     />
   )
