@@ -28,14 +28,14 @@ router.post('/', async (req, res) => {
       ) VALUES (
         $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22
       ) RETURNING id`,
-      [
+      ([
         studentId, studentName, major, advisor,
         semester, year, level, transactionNo, billNo,
         registrationDate, printDate,
         femaleDiscount, childOfAlumni, discountAmount,
         semesterFee, graduationFee, peregrineFee, lateRegFee,
         cashBack, forfeitedAmount, dueBy, processedBy,
-      ]
+      ]).map(v => v === '' ? null : v)
     )
 
     const registrationId = regResult.rows[0].id
@@ -46,10 +46,10 @@ router.post('/', async (req, res) => {
           registration_id, course_id, section, course_name,
           credit_hour, class_time, days, room
         ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
-        [
+        ([
           registrationId, course.courseId, course.section, course.courseName,
           course.creditHour, course.classTime, course.days, course.room,
-        ]
+        ]).map(v => v === '' ? null : v)
       )
     }
 

@@ -92,7 +92,7 @@ const SectionTitle = ({ number, title, subtitle }) => (
   </div>
 );
 
-export default function RegistrationForm({ onPdfView }) {
+export default function RegistrationForm({ onPdfView, onSubmitted }) {
   const [form, setForm] = useState(defaultForm);
   const [submitted, setSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
@@ -136,8 +136,17 @@ export default function RegistrationForm({ onPdfView }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      if (!res.ok) throw new Error('Server error');
-      setSubmitted(true);
+      if (!res.ok) {
+        let detail = 'Server error';
+        try { const errBody = await res.json(); detail = errBody.error || detail; } catch (_) {}
+        throw new Error(detail);
+      }
+      const data = await res.json();
+      if (onSubmitted) {
+        onSubmitted(data.id);
+      } else {
+        setSubmitted(true);
+      }
     } catch (err) {
       setSubmitError(err.message);
     } finally {
