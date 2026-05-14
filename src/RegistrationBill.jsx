@@ -120,7 +120,8 @@ const BillingStatement = ({ copy, reg: regProp, courses: coursesProp }) => {
       marginBottom: "0",
       pageBreakAfter: "always",
       backgroundColor: "#fff",
-      width: "750px",
+      width: "680px",
+      boxSizing: "border-box",
     }}>
       {/* Header */}
       <div style={{ position: "relative", marginBottom: "4px" }}>
@@ -289,7 +290,7 @@ export default function RegistrationBill({ registrationId, onBack }) {
     }}>
       <style>{`@media print{@page{margin:15mm;size:A4 portrait}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.no-print{display:none!important}}`}</style>
       <div className="no-print" style={{
-        width: "750px", marginBottom: "12px",
+        width: "680px", marginBottom: "12px",
         display: "flex", justifyContent: "space-between", alignItems: "center",
       }}>
         <button onClick={onBack} style={{
