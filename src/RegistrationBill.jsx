@@ -152,7 +152,7 @@ const BillingStatement = ({ copy }) => {
   );
 };
 
-export default function App() {
+export default function RegistrationBill({ onBack }) {
   return (
     <div style={{
       backgroundColor: "#e0e0e0",
@@ -163,6 +163,21 @@ export default function App() {
       alignItems: "center",
       gap: "0",
     }}>
+      <div style={{
+        width: "750px", marginBottom: "12px",
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+      }}>
+        <button onClick={onBack} style={{
+          background: "#334155", border: "none", color: "#fff",
+          padding: "8px 18px", borderRadius: "6px", cursor: "pointer",
+          fontSize: "13px", fontWeight: "600", fontFamily: "'DM Sans', sans-serif",
+        }}>← Back to Form</button>
+        <button onClick={() => {}} style={{
+          background: "#334155", border: "none", color: "#fff",
+          padding: "8px 18px", borderRadius: "6px", cursor: "pointer",
+          fontSize: "13px", fontWeight: "600", fontFamily: "'DM Sans', sans-serif",
+        }}>Download</button>
+      </div>
       {/* Student Copy */}
       <BillingStatement copy="Student Copy" />
 

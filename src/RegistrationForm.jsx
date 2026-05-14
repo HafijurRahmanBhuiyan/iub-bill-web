@@ -92,7 +92,7 @@ const SectionTitle = ({ number, title, subtitle }) => (
   </div>
 );
 
-export default function RegistrationForm() {
+export default function RegistrationForm({ onPdfView }) {
   const [form, setForm] = useState(defaultForm);
   const [submitted, setSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
@@ -191,15 +191,27 @@ export default function RegistrationForm() {
               </h1>
               <p style={{ margin: 0, color: "#64748b", fontSize: "13px" }}>Billing Statement · Registrar's Office</p>
             </div>
-            <div style={{
-              background: "#1e293b", border: "1px solid #334155",
-              borderRadius: "10px", padding: "12px 18px", textAlign: "right",
-            }}>
-              <div style={{ fontSize: "10px", color: "#64748b", letterSpacing: "0.1em", textTransform: "uppercase" }}>Net Payable</div>
-              <div style={{ fontSize: "22px", fontWeight: "700", color: "#3b82f6", fontFamily: "'DM Mono', monospace" }}>
-                ৳{netPayable.toLocaleString("en-BD", { minimumFractionDigits: 2 })}
+            <div style={{ display: "flex", alignItems: "flex-end", gap: "10px" }}>
+              <button onClick={onPdfView} style={{
+                background: "transparent", border: "1px solid #3b82f6", color: "#3b82f6",
+                borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600",
+                cursor: "pointer", fontFamily: "'DM Sans', sans-serif",
+                transition: "background 0.2s",
+              }}
+                onMouseEnter={e => e.target.style.background = "rgba(59,130,246,0.1)"}
+                onMouseLeave={e => e.target.style.background = "transparent"}>
+                PDF View
+              </button>
+              <div style={{
+                background: "#1e293b", border: "1px solid #334155",
+                borderRadius: "10px", padding: "12px 18px", textAlign: "right",
+              }}>
+                <div style={{ fontSize: "10px", color: "#64748b", letterSpacing: "0.1em", textTransform: "uppercase" }}>Net Payable</div>
+                <div style={{ fontSize: "22px", fontWeight: "700", color: "#3b82f6", fontFamily: "'DM Mono', monospace" }}>
+                  ৳{netPayable.toLocaleString("en-BD", { minimumFractionDigits: 2 })}
+                </div>
+                <div style={{ fontSize: "10px", color: "#475569", marginTop: "2px" }}>{totalCredits} credit{totalCredits !== 1 ? "s" : ""} registered</div>
               </div>
-              <div style={{ fontSize: "10px", color: "#475569", marginTop: "2px" }}>{totalCredits} credit{totalCredits !== 1 ? "s" : ""} registered</div>
             </div>
           </div>
         </div>
