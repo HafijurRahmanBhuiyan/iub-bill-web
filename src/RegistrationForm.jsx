@@ -43,7 +43,7 @@ const semesters = ["Autumn", "Spring", "Summer"];
 const levels = ["Undergraduate", "Graduate"];
 
 const Field = ({ label, children, half }) => (
-  <div style={{
+  <div className={half ? "rf-field-half" : ""} style={{
     display: "flex",
     flexDirection: "column",
     gap: "5px",
@@ -183,8 +183,9 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0f172a", fontFamily: "'DM Sans', sans-serif", padding: "40px 20px" }}>
+    <div className="rf-page" style={{ minHeight: "100vh", background: "#0f172a", fontFamily: "'DM Sans', sans-serif", padding: "40px 20px" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+      <style>{`@media (max-width: 640px){.rf-page{padding:20px 12px!important}.rf-card{padding:16px!important}.rf-course-card{padding:12px!important}.rf-field-half{flex:0 0 100%!important}.rf-header-right{width:100%!important}.rf-net-payable{padding:10px 14px!important}.rf-header-right>button{white-space:nowrap}}`}</style>
 
       <div style={{ maxWidth: "820px", margin: "0 auto" }}>
 
@@ -200,7 +201,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
               </h1>
               <p style={{ margin: 0, color: "#64748b", fontSize: "13px" }}>Billing Statement · Registrar's Office</p>
             </div>
-            <div style={{ display: "flex", alignItems: "flex-end", gap: "10px" }}>
+            <div className="rf-header-right" style={{ display: "flex", alignItems: "flex-end", gap: "10px" }}>
               <button onClick={() => onPdfView(form)} style={{
                 background: "transparent", border: "1px solid #3b82f6", color: "#3b82f6",
                 borderRadius: "8px", padding: "10px 20px", fontSize: "13px", fontWeight: "600",
@@ -211,7 +212,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
                 onMouseLeave={e => e.target.style.background = "transparent"}>
                 PDF View
               </button>
-              <div style={{
+              <div className="rf-net-payable" style={{
                 background: "#1e293b", border: "1px solid #334155",
                 borderRadius: "10px", padding: "12px 18px", textAlign: "right",
               }}>
@@ -229,7 +230,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
           {/* Section 1: Student Information */}
-          <div style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
+          <div className="rf-card" style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
             <SectionTitle number="1" title="Student Information" subtitle="Personal and academic details of the student" />
             <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
               <Field label="Student ID" half>
@@ -260,7 +261,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
           </div>
 
           {/* Section 2: Registration Details */}
-          <div style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
+          <div className="rf-card" style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
             <SectionTitle number="2" title="Registration Details" subtitle="Semester, level, and billing reference numbers" />
             <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
               <Field label="Semester" half>
@@ -302,11 +303,11 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
           </div>
 
           {/* Section 3: Course Registration */}
-          <div style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
+          <div className="rf-card" style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
             <SectionTitle number="3" title="Course Registration" subtitle="Add all courses for this semester" />
 
             {form.courses.map((course, idx) => (
-              <div key={course.id} style={{
+              <div key={course.id} className="rf-course-card" style={{
                 background: "#0f172a", borderRadius: "10px", border: "1px solid #334155",
                 padding: "18px", marginBottom: "12px", position: "relative",
               }}>
@@ -386,7 +387,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
           </div>
 
           {/* Section 4: Fees & Discounts */}
-          <div style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
+          <div className="rf-card" style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
             <SectionTitle number="4" title="Fees & Discounts" subtitle="Financial adjustments applied to this registration" />
             <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
               <Field label="Female Discount (%)" half>
@@ -472,7 +473,7 @@ export default function RegistrationForm({ onPdfView, onSubmitted }) {
           </div>
 
           {/* Section 5: Processing Info */}
-          <div style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
+          <div className="rf-card" style={{ background: "#1e293b", borderRadius: "14px", border: "1px solid #334155", padding: "28px" }}>
             <SectionTitle number="5" title="Processing Information" subtitle="Due date and processing details" />
             <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
               <Field label="Due By" half>

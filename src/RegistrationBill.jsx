@@ -314,7 +314,7 @@ export default function RegistrationBill({ registrationId, onBack, formData }) {
   }, [registrationId]);
 
   return (
-    <div style={{
+    <div className="rb-page" style={{
       backgroundColor: "#e0e0e0",
       minHeight: "100vh",
       padding: "24px",
@@ -323,8 +323,8 @@ export default function RegistrationBill({ registrationId, onBack, formData }) {
       alignItems: "center",
       gap: "0",
     }}>
-      <style>{`@media print{@page{margin:15mm;size:A4 portrait}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.no-print{display:none!important}}`}</style>
-      <div className="no-print" style={{
+      <style>{`@media print{@page{margin:15mm;size:A4 portrait}*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}.no-print{display:none!important}}@media(max-width:640px){.rb-page{padding:12px!important}.rb-btn-bar{width:100%!important;flex-wrap:wrap!important;gap:8px!important}.rb-btn-bar button{flex:1;min-width:0}.rb-scroll{max-width:100%!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch}}`}</style>
+      <div className="no-print rb-btn-bar" style={{
         width: "680px", marginBottom: "12px",
         display: "flex", justifyContent: "space-between", alignItems: "center",
       }}>
@@ -347,21 +347,22 @@ export default function RegistrationBill({ registrationId, onBack, formData }) {
       {loading && <div style={{ color: "#333", fontSize: "14px" }}>Loading registration data...</div>}
       {error && <div style={{ color: "#c00", fontSize: "14px" }}>Error: {error}</div>}
       {!loading && !error && registrationId && (
-        <>
+        <div className="rb-scroll" style={{ maxWidth: "680px", width: "100%" }}>
           <BillingStatement copy="Student Copy" reg={registration} courses={registration?.courses} />
           <BillingStatement copy="Bank Copy" reg={registration} courses={registration?.courses} />
-        </>
+        </div>
       )}
       {!loading && !error && !registrationId && formData && (
-        <>
+        <div className="rb-scroll" style={{ maxWidth: "680px", width: "100%" }}>
           <BillingStatement copy="Student Copy" reg={mapFormToReg(formData)} courses={mapFormToCourses(formData.courses)} />
           <BillingStatement copy="Bank Copy" reg={mapFormToReg(formData)} courses={mapFormToCourses(formData.courses)} />
-        </>
+        </div>
       )}
       {!loading && !error && !registrationId && !formData && (
         <div style={{
           color: "#333", fontSize: "16px", marginTop: "60px",
           textAlign: "center", fontFamily: "'DM Sans', sans-serif",
+          padding: "0 12px",
         }}>
           No data to display. Please fill out the form first and click PDF View.
         </div>
